@@ -19,6 +19,10 @@ O fluxo foi estruturado com `LangChain Agents` e `tools` específicas para créd
 - recomendação de ações;
 - guardrails de compliance.
 
+## Interface
+
+![Interface do agente de score](assets/agente_expli.jpg)
+
 ## Arquitetura
 
 ```mermaid
@@ -309,6 +313,10 @@ The system is designed to:
 - recommend improvement actions;
 - simulate educational score changes;
 - enforce compliance-oriented answer guardrails.
+
+## Interface
+
+![Credit score agent interface](assets/agente_expli.jpg)
 
 ## Technical Highlights
 
