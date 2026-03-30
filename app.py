@@ -4,6 +4,7 @@ import streamlit as st
 
 from src.agent import ask_credit_agent
 from src.sample_data import load_customers
+from src.tools import MAIN_DRIVER_TRANSLATIONS, SCORE_BAND_LABELS
 
 
 st.set_page_config(page_title="Agente de Explicação de Score", page_icon="💳", layout="wide")
@@ -26,6 +27,11 @@ with st.sidebar:
     run_button = st.button("Consultar agente")
 
 selected_profile = customers.loc[customers["customer_id"] == selected_customer].iloc[0].to_dict()
+selected_profile["score_band"] = SCORE_BAND_LABELS.get(selected_profile["score_band"], selected_profile["score_band"])
+selected_profile["main_drivers"] = MAIN_DRIVER_TRANSLATIONS.get(
+    selected_profile["main_drivers"],
+    selected_profile["main_drivers"],
+)
 
 metric_cols = st.columns(4)
 metric_cols[0].metric("Cliente", selected_profile["name"])

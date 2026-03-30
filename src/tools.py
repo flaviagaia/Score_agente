@@ -8,6 +8,20 @@ from langchain_core.tools import tool
 from .sample_data import load_customers
 
 
+SCORE_BAND_LABELS = {
+    "good": "bom",
+    "fair": "regular",
+    "poor": "baixo",
+}
+
+
+MAIN_DRIVER_TRANSLATIONS = {
+    "Strong payment consistency and low recent delinquency.": "Boa consistência de pagamentos e baixa inadimplência recente.",
+    "High utilization and late payments are pulling the score down.": "Alta utilização do crédito e atrasos recentes estão pressionando o score para baixo.",
+    "Multiple recent delinquencies, very high utilization, and negative records.": "Múltiplas inadimplências recentes, utilização muito alta e registros negativos estão afetando o score.",
+}
+
+
 def _get_customer_row(customer_id: str) -> dict[str, Any]:
     customers = load_customers()
     row = customers.loc[customers["customer_id"] == customer_id]
@@ -16,17 +30,27 @@ def _get_customer_row(customer_id: str) -> dict[str, Any]:
     return row.iloc[0].to_dict()
 
 
+def _localized_profile(profile: dict[str, Any]) -> dict[str, Any]:
+    localized = dict(profile)
+    localized["score_band"] = SCORE_BAND_LABELS.get(str(profile["score_band"]), str(profile["score_band"]))
+    localized["main_drivers"] = MAIN_DRIVER_TRANSLATIONS.get(
+        str(profile["main_drivers"]),
+        str(profile["main_drivers"]),
+    )
+    return localized
+
+
 @tool
 def get_credit_profile(customer_id: str) -> str:
     """Return the structured credit profile for a customer_id."""
-    profile = _get_customer_row(customer_id)
+    profile = _localized_profile(_get_customer_row(customer_id))
     return json.dumps(profile, ensure_ascii=False, indent=2)
 
 
 @tool
 def explain_score_factors(customer_id: str) -> str:
     """Explain the main score factors for a customer_id using the internal profile."""
-    profile = _get_customer_row(customer_id)
+    profile = _localized_profile(_get_customer_row(customer_id))
     score = int(profile["score"])
     utilization = int(profile["credit_utilization_pct"])
     late_payments = int(profile["recent_late_payments"])
@@ -63,7 +87,7 @@ def explain_score_factors(customer_id: str) -> str:
 @tool
 def recommend_actions(customer_id: str) -> str:
     """Recommend concrete next actions that may help improve the score profile."""
-    profile = _get_customer_row(customer_id)
+    profile = _localized_profile(_get_customer_row(customer_id))
     actions = []
 
     if int(profile["credit_utilization_pct"]) > 50:
@@ -83,7 +107,7 @@ def recommend_actions(customer_id: str) -> str:
 @tool
 def simulate_score_change(customer_id: str, utilization_target_pct: int = 30, late_payment_reduction: int = 1) -> str:
     """Estimate a directional score improvement if utilization and late payments improve."""
-    profile = _get_customer_row(customer_id)
+    profile = _localized_profile(_get_customer_row(customer_id))
     current_score = int(profile["score"])
     current_utilization = int(profile["credit_utilization_pct"])
     current_lates = int(profile["recent_late_payments"])
