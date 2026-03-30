@@ -1,0 +1,4 @@
+customer_id,name,score,score_band,on_time_payment_ratio,credit_utilization_pct,recent_late_payments,active_accounts,hard_inquiries_6m,negative_records,main_drivers
+CRED-1001,Ana Souza,742,good,0.97,28,0,6,1,0,Strong payment consistency and low recent delinquency.
+CRED-1002,Bruno Lima,618,fair,0.83,71,2,4,4,1,High utilization and late payments are pulling the score down.
+CRED-1003,Carla Mendes,556,poor,0.71,88,4,3,5,2,"Multiple recent delinquencies, very high utilization, and negative records."
