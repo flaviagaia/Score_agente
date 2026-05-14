@@ -60,17 +60,17 @@ Do ponto de vista funcional, o agente responde em duas etapas:
 
 ## Estrutura do Projeto
 
-- [src/sample_data.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/src/sample_data.py)
+- [src/sample_data.py](src/sample_data.py)
   - base demo de perfis de crédito.
-- [src/tools.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/src/tools.py)
+- [src/tools.py](src/tools.py)
   - ferramentas do agente com `@tool`.
-- [src/agent.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/src/agent.py)
+- [src/agent.py](src/agent.py)
   - fábrica do agente LangChain e modo fallback.
-- [app.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/app.py)
+- [app.py](app.py)
   - interface em Streamlit.
-- [main.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/main.py)
+- [main.py](main.py)
   - execução rápida do cenário principal.
-- [tests/test_agent.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/tests/test_agent.py)
+- [tests/test_agent.py](tests/test_agent.py)
   - validação da camada principal de explicação.
 
 ## Como o LangChain Agent foi modelado
@@ -230,7 +230,7 @@ Isso significa:
 
 ## Interface Streamlit
 
-O app em [app.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/app.py) funciona como um `agent inspection console`:
+O app em [app.py](app.py) funciona como um `agent inspection console`:
 
 - seleção do cliente consultado;
 - entrada da pergunta do cliente;
@@ -243,7 +243,7 @@ Isso ajuda a equipe técnica a entender como o agente foi montado sem depender a
 
 ## Validação
 
-Os testes em [tests/test_agent.py](/Users/flaviagaia/Documents/CV_FLAVIA_CODEX/Score_agente/tests/test_agent.py) cobrem:
+Os testes em [tests/test_agent.py](tests/test_agent.py) cobrem:
 
 - retorno mínimo do agente no fallback;
 - presença de explicação com referência ao score;
